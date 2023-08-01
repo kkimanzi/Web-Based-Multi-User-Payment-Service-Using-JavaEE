@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:metadata>
+        <f:viewAction action="#{clientDashView.onPageLoad}" />
+    </f:metadata>
+<h:head>
+	<title>User Dashboard</title>
+</h:head>
+<h:body>
+	<h:form>
+		<h:commandLink action="#{loginView.logout}" value="Logout" />
+	</h:form>
+	<h3>Hello #{loginView.authenticatedUser.username}</h3>
+        <h4>Dashboard  </h4>
+        
+        <br /><!-- comment -->
+        <h4>Account Balance: <h:outputText id="accountbalance" value="#{clientDashView.accountbalance}" /> #{loginView.authenticatedUser.currency}</h4>
+        <br />
+        <h:link outcome="transactions" value="View Transactions" /><br/>
+        <h:link outcome="received_money_notifications" value="Notifications For Money Received" />
+            <h:outputText id="numOfNotification" value = "#{clientDashView.numOfNotifications}"></h:outputText><br/>
+        <h:link outcome="send_money" value="Send Money" /><br/>
+        <h:link outcome="request_money" value="Request For Money" /><br/> 
+        <h:link outcome="received_requests" value="Money Requsts Sent To Me" />
+            <h:outputText id="numOfRequests" value = "#{clientDashView.numOfRequests}"></h:outputText><br/>
+</h:body>
+</html>

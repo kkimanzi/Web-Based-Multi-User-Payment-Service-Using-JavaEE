@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:viewAction action="#{receivedRequestsView.onPageLoad}" />
+    </f:metadata>
+    
+    <h:head>
+        <title>Notifications: Money Requests</title>        
+    </h:head>
+    <h:body>   
+        <h:form>
+		<h:commandLink action="#{loginView.logout}" value="Logout" />
+	</h:form>
+        <h3>Hello #{loginView.authenticatedUser.username}</h3><!-- comment -->
+        
+        <h4>Notifications: Money Received</h4>
+        <h:form>
+            <p:messages>
+                <p:autoUpdate />
+            </p:messages>
+            <h:dataTable value="#{receivedRequestsView.moneyRequests}" var="transfer"
+                         >
+                <h:column>
+                    <f:facet name = "header">Requested from:</f:facet>
+                    #{transfer.requestor}
+                </h:column>
+                <h:column>
+                    <f:facet name = "header">Amount</f:facet>
+                    #{transfer.amount}
+                </h:column>
+                <h:column>
+                    <f:facet name = "header">Status</f:facet>
+                    #{transfer.status}
+                </h:column>
+                <h:column>
+                    <f:facet name = "header">Accept</f:facet>
+                    <h:commandButton action="#{receivedRequestsView.accept}" value="Accept">
+                        <f:param name="requestId" value="#{transfer.id}" />
+                        <f:param name="requestor" value="#{transfer.requestor}" />
+                        <f:param name="amount" value="#{transfer.amount}" />
+                    </h:commandButton>
+                </h:column>
+                <h:column>
+                    <f:facet name = "header">Reject</f:facet>
+                    <h:commandButton action="#{receivedRequestsView.reject}" value="Reject">
+                        <f:param name="requestId" value="#{transfer.id}" />
+                        <f:param name="requestor" value="#{transfer.requestor}" />
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>

@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    
+    <f:metadata>
+        <f:viewAction action="#{requestMoneyView.onPageLoad}" />
+    </f:metadata><!-- comment -->
+    <p:messages>
+            <p:autoUpdate />
+        </p:messages>
+    
+    <h:head>
+        <title>Request Money</title>
+    </h:head>
+    <h:body>
+        <h:form>
+		<h:commandLink action="#{loginView.logout}" value="Logout" />
+	</h:form>
+        <h3>Hello #{loginView.authenticatedUser.username}</h3><!-- comment -->
+        <h4>Request Money</h4>
+        <h:form>
+            <f:event listener="#{requestMoneyView.validateFields}"
+            type="postValidate" />
+            
+            <h:panelGrid columns="3">          
+                <h:outputLabel for="recipient">Request From :</h:outputLabel>
+                <h:inputText id="giver" value="#{requestMoneyView.giver}" required="true"
+                             requiredMessage="Please enter giver"></h:inputText>
+                <br/>
+                <h:outputLabel for="amount">Amount :</h:outputLabel>
+                <p:inputNumber decimalPlaces="0" id="amount" value="#{requestMoneyView.amount}" required="true"
+                    requiredMessage="Please enter amount"></p:inputNumber>
+                <h:outputText id="currency" value="#{requestMoneyView.currency}"></h:outputText> 
+                
+                <h:commandButton action="#{requestMoneyView.requestMoney}" value="Request Money"></h:commandButton>
+            </h:panelGrid>
+        </h:form>
+        
+        <h4>Previous Requests</h4>
+        <h:form>
+            <h:dataTable value="#{requestMoneyView.pendingRequests}" var="transfer"
+                         >
+                <h:column>
+                    <f:facet name = "header">Requested from:</f:facet>
+                    #{transfer.giver}
+                </h:column>
+                <h:column>
+                    <f:facet name = "header">Amount</f:facet>
+                    #{transfer.amount}
+                </h:column>
+                <h:column>
+                    <f:facet name = "header">Status</f:facet>
+                    #{transfer.status}
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

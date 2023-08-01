@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>register</title>
+</h:head>
+<h:body>
+
+    <h:form id="registrationForm">
+
+        <!-- register a PostValidateEvent -->
+        <f:event listener="#{registerView.validatePassword}"
+            type="postValidate" />
+        <p:messages>
+            <p:autoUpdate />
+        </p:messages>
+        
+        <h3>Create new account</h3>
+        <h:panelGrid columns="2">
+            <h:outputLabel for="username">Username:</h:outputLabel>
+            <h:inputText id="username" value="#{registerView.username}" required="true"
+                requiredMessage="Please enter your username">
+            </h:inputText>
+
+            <h:outputLabel for="password">Password:</h:outputLabel>
+            <h:inputSecret id="password" value="#{registerView.password}"
+                required="true" requiredMessage="Please enter your password"
+                validatorMessage="Password must be between 6 and 20 characters">
+                <f:validateRegex pattern="(.{6,20})" />
+            </h:inputSecret>
+            
+            <h:outputLabel for="confirmpassword">Confirm password:</h:outputLabel>
+            <h:inputSecret id="confirmpassword"
+                value="#{registerView.confirmPassword}" required="true"
+                requiredMessage="Please confirm your password">
+            </h:inputSecret>
+            
+            <h:outputLabel for="currency">Select currency:</h:outputLabel>
+            <h:selectOneMenu id="currency" value = "#{registerView.currency}"> 
+                <f:selectItem itemValue = "GB Pound" itemLabel = "GB Pound" /> 
+                <f:selectItem itemValue = "US Dollar" itemLabel = "US Dollar" /> 
+                <f:selectItem itemValue = "Euro" itemLabel = "Euro" /> 
+                <p:ajax listener="#{registerView.currencyChangeListener}" update="starting_balanace" process="@this"/>
+            </h:selectOneMenu> 
+            
+            <h:outputLabel for="starting_balance">Starting Balance</h:outputLabel>
+            <h:outputText id="starting_balanace" value="#{registerView.starting_balance}" >
+            </h:outputText>
+
+            
+            <h:commandButton action="#{registerView.register}" value="Register"></h:commandButton>
+
+        </h:panelGrid>
+
+    </h:form>
+
+    <br />
+    <br />
+    <h:link value="I already have an account" outcome="signin" />
+
+</h:body>
+</html>

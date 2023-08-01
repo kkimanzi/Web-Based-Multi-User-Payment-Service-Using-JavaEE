@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <p:messages>
+            <p:autoUpdate />
+        </p:messages>
+    
+    <h:head>
+        <title>Send Money</title>
+    </h:head>
+    <h:body>
+        <h:form>
+		<h:commandLink action="#{loginView.logout}" value="Logout" />
+	</h:form>
+        <h3>Hello #{loginView.authenticatedUser.username}</h3><!-- comment -->
+        <h4>Send Money</h4>
+        <h:form>
+            <f:event listener="#{sendView.validateFields}"
+            type="postValidate" />
+            
+            <h:panelGrid columns="3">          
+                <h:outputLabel for="recipient">Recipient :</h:outputLabel>
+                <h:inputText id="recipient" value="#{sendView.recipient}" required="true"
+                             requiredMessage="Please enter recipient"></h:inputText>
+                <br/>
+                <h:outputLabel for="amount">Amount :</h:outputLabel>
+                <p:inputNumber decimalPlaces="0" id="amount" value="#{sendView.amount}" required="true"
+                    requiredMessage="Please enter amount"></p:inputNumber>
+                <h:outputText id="currency" value="#{sendView.currency}"></h:outputText> 
+                
+                <h:commandButton action="#{sendView.sendMoney}" value="Send Money"></h:commandButton>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+

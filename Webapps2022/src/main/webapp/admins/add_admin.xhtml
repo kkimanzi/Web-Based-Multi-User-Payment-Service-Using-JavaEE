@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:viewAction action="#{clientDashView.onPageLoad}" />
+    </f:metadata>
+<h:head>
+	<title>Add Admin</title>
+</h:head>
+<h:body>
+	<h:form>
+		<h:commandLink action="#{loginView.logout}" value="Logout" />
+	</h:form>
+	<h3>Hello #{loginView.authenticatedUser.username}</h3>
+        <br /><!-- comment -->
+        <h:form id="adminRegistrationForm">
+
+            <!-- register a PostValidateEvent -->
+            <f:event listener="#{addAdminView.validatePassword}"
+                type="postValidate" />
+            <p:messages>
+                <p:autoUpdate />
+            </p:messages>
+
+            <h3>Register New Admin</h3>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="adminname">Adminname :</h:outputLabel>
+                <h:inputText id="adminname" value="#{addAdminView.adminname}" required="true"
+                    requiredMessage="Please enter your adminname">
+                </h:inputText>
+
+                <h:outputLabel for="password">Password:</h:outputLabel>
+                <h:inputSecret id="password" value="#{addAdminView.password}"
+                    required="true" requiredMessage="Please enter your password"
+                    validatorMessage="Password must be between 6 and 20 characters">
+                    <f:validateRegex pattern="(.{6,20})" />
+                </h:inputSecret>
+
+                <h:outputLabel for="confirmpassword">Confirm password:</h:outputLabel>
+                <h:inputSecret id="confirmpassword"
+                    value="#{addAdminView.confirmPassword}" required="true"
+                    requiredMessage="Please confirm your password">
+                </h:inputSecret>
+
+                <h:commandButton action="#{addAdminView.register}" value="Register"></h:commandButton>
+
+            </h:panelGrid>
+
+        </h:form>
+        
+</h:body>
+</html>
